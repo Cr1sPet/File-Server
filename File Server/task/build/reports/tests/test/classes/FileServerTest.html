@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - Class FileServerTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>Class FileServerTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/default-package.html">default-package</a> &gt; FileServerTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">1</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.397s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+<li>
+<a href="#tab2">Standard error</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">start</td>
+<td class="success">0.397s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>?[1;31m
+Start test 1?[0m
+Server started!
+Client started!
+client accepted
+into run
+start to wait info from client
+Enter action (1 - get a file, 2 - create a file, 3 - delete a file): &gt; exit
+The request was sent.
+Received: exit
+the response says that the server has been stopped
+Server started!
+Client started!
+client accepted
+into run
+Enter action (1 - get a file, 2 - create a file, 3 - delete a file): &gt; 2
+start to wait info from client
+Enter filename: &gt; test_purpose_WOJ9RQ4FI.txt
+Enter file content: &gt; FLSNNB6KFZCGE0B
+The request was sent.
+Received: PUT test_purpose_WOJ9RQ4FI.txt FLSNNB6KFZCGE0B
+Sent: All files were sent!
+start to wait info from client
+200
+The response says that file was created!
+Client started!
+client accepted
+Enter action (1 - get a file, 2 - create a file, 3 - delete a file): &gt; 2
+into run
+start to wait info from client
+Enter filename: &gt; test_purpose_WOJ9RQ4FI.txt
+Enter file content: &gt; FLSNNB6KFZCGE0B
+The request was sent.
+Received: PUT test_purpose_WOJ9RQ4FI.txt FLSNNB6KFZCGE0B
+File exist
+Sent: All files were sent!
+start to wait info from client
+403
+The response says that creating the file was forbidden!
+Client started!
+client accepted
+Enter action (1 - get a file, 2 - create a file, 3 - delete a file): &gt; 1
+into run
+start to wait info from client
+Enter filename: &gt; test_purpose_WOJ9RQ4FI.txt
+The request was sent.
+Received: GET test_purpose_WOJ9RQ4FI.txt
+Sent: All files were sent!
+start to wait info from client
+The content of the file is: FLSNNB6KFZCGE0B
+Client started!
+client accepted
+into run
+Enter action (1 - get a file, 2 - create a file, 3 - delete a file): &gt; 1
+start to wait info from client
+Enter filename: &gt; test_purpose_1713N0.txt
+The request was sent.
+Received: GET test_purpose_1713N0.txt
+File don't exist
+Sent: All files were sent!
+start to wait info from client
+The response says that the file was not found!
+Client started!
+client accepted
+into run
+Enter action (1 - get a file, 2 - create a file, 3 - delete a file): &gt; 3
+start to wait info from client
+Enter filename: &gt; test_purpose_RGSTZ0.txt
+The request was sent.
+Received: DELETE test_purpose_RGSTZ0.txt
+Sent: All files were sent!
+start to wait info from client
+The response says that the file was not found!
+Client started!
+client accepted
+into run
+start to wait info from client
+Enter action (1 - get a file, 2 - create a file, 3 - delete a file): &gt; 3
+Enter filename: &gt; test_purpose_WOJ9RQ4FI.txt
+The request was sent.
+Received: DELETE test_purpose_WOJ9RQ4FI.txt
+Sent: All files were sent!
+start to wait info from client
+The response says that the file was successfully deleted!
+Client started!
+client accepted
+into run
+start to wait info from client
+Enter action (1 - get a file, 2 - create a file, 3 - delete a file): &gt; exit
+The request was sent.
+Received: exit
+the response says that the server has been stopped
+</pre>
+</span>
+</div>
+<div id="tab2" class="tab">
+<h2>Standard error</h2>
+<span class="code">
+<pre>Exception in thread &quot;Thread-4&quot; org.hyperskill.hstest.dynamic.security.ExitException: Tried to exit with status 0.
+	at org.hyperskill.hstest.dynamic.security.TestingSecurityManager.checkExit(TestingSecurityManager.java:50)
+	at java.base/java.lang.Runtime.exit(Runtime.java:113)
+	at java.base/java.lang.System.exit(System.java:1860)
+	at server.Session.run(Session.java:44)
+java.net.BindException: Address already in use
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:555)
+	at java.base/sun.nio.ch.Net.bind(Net.java:544)
+	at java.base/sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:643)
+	at java.base/java.net.ServerSocket.bind(ServerSocket.java:388)
+	at java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:274)
+	at java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:167)
+	at server.PortListening.run(PortListening.java:15)
+java.net.BindException: Address already in use
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:555)
+	at java.base/sun.nio.ch.Net.bind(Net.java:544)
+	at java.base/sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:643)
+	at java.base/java.net.ServerSocket.bind(ServerSocket.java:388)
+	at java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:274)
+	at java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:167)
+	at server.PortListening.run(PortListening.java:15)
+java.net.BindException: Address already in use
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:555)
+	at java.base/sun.nio.ch.Net.bind(Net.java:544)
+	at java.base/sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:643)
+	at java.base/java.net.ServerSocket.bind(ServerSocket.java:388)
+	at java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:274)
+	at java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:167)
+	at server.PortListening.run(PortListening.java:15)
+java.net.BindException: Address already in use
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:555)
+	at java.base/sun.nio.ch.Net.bind(Net.java:544)
+	at java.base/sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:643)
+	at java.base/java.net.ServerSocket.bind(ServerSocket.java:388)
+	at java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:274)
+	at java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:167)
+	at server.PortListening.run(PortListening.java:15)
+java.net.BindException: Address already in use
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:555)
+	at java.base/sun.nio.ch.Net.bind(Net.java:544)
+	at java.base/sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:643)
+	at java.base/java.net.ServerSocket.bind(ServerSocket.java:388)
+	at java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:274)
+	at java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:167)
+	at server.PortListening.run(PortListening.java:15)
+java.net.BindException: Address already in use
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:555)
+	at java.base/sun.nio.ch.Net.bind(Net.java:544)
+	at java.base/sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:643)
+	at java.base/java.net.ServerSocket.bind(ServerSocket.java:388)
+	at java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:274)
+	at java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:167)
+	at server.PortListening.run(PortListening.java:15)
+java.net.BindException: Address already in use
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:555)
+	at java.base/sun.nio.ch.Net.bind(Net.java:544)
+	at java.base/sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:643)
+	at java.base/java.net.ServerSocket.bind(ServerSocket.java:388)
+	at java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:274)
+	at java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:167)
+	at server.PortListening.run(PortListening.java:15)
+java.net.BindException: Address already in use
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:555)
+	at java.base/sun.nio.ch.Net.bind(Net.java:544)
+	at java.base/sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:643)
+	at java.base/java.net.ServerSocket.bind(ServerSocket.java:388)
+	at java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:274)
+	at java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:167)
+	at server.PortListening.run(PortListening.java:15)
+java.io.EOFException
+	at java.base/java.io.DataInputStream.readUnsignedShort(DataInputStream.java:346)
+	at java.base/java.io.DataInputStream.readUTF(DataInputStream.java:595)
+	at java.base/java.io.DataInputStream.readUTF(DataInputStream.java:570)
+	at server.Session.run(Session.java:25)
+java.io.EOFException
+	at java.base/java.io.DataInputStream.readUnsignedShort(DataInputStream.java:346)
+	at java.base/java.io.DataInputStream.readUTF(DataInputStream.java:595)
+	at java.base/java.io.DataInputStream.readUTF(DataInputStream.java:570)
+	at server.Session.run(Session.java:25)
+java.io.EOFException
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 7.3.3</a> at Apr 14, 2022, 11:26:56 PM</p>
+</div>
+</div>
+</body>
+</html>

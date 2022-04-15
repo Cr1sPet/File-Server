@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="FileServerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-04-14T20:26:56" hostname="serj-GF63-Thin-9RCX" time="0.397">
+  <properties/>
+  <testcase name="start" classname="FileServerTest" time="0.397"/>
+  <system-out><![CDATA[?[1;31m
+Start test 1?[0m
+Server started!
+Client started!
+client accepted
+into run
+start to wait info from client
+Enter action (1 - get a file, 2 - create a file, 3 - delete a file): > exit
+The request was sent.
+Received: exit
+the response says that the server has been stopped
+Server started!
+Client started!
+client accepted
+into run
+Enter action (1 - get a file, 2 - create a file, 3 - delete a file): > 2
+start to wait info from client
+Enter filename: > test_purpose_WOJ9RQ4FI.txt
+Enter file content: > FLSNNB6KFZCGE0B
+The request was sent.
+Received: PUT test_purpose_WOJ9RQ4FI.txt FLSNNB6KFZCGE0B
+Sent: All files were sent!
+start to wait info from client
+200
+The response says that file was created!
+Client started!
+client accepted
+Enter action (1 - get a file, 2 - create a file, 3 - delete a file): > 2
+into run
+start to wait info from client
+Enter filename: > test_purpose_WOJ9RQ4FI.txt
+Enter file content: > FLSNNB6KFZCGE0B
+The request was sent.
+Received: PUT test_purpose_WOJ9RQ4FI.txt FLSNNB6KFZCGE0B
+File exist
+Sent: All files were sent!
+start to wait info from client
+403
+The response says that creating the file was forbidden!
+Client started!
+client accepted
+Enter action (1 - get a file, 2 - create a file, 3 - delete a file): > 1
+into run
+start to wait info from client
+Enter filename: > test_purpose_WOJ9RQ4FI.txt
+The request was sent.
+Received: GET test_purpose_WOJ9RQ4FI.txt
+Sent: All files were sent!
+start to wait info from client
+The content of the file is: FLSNNB6KFZCGE0B
+Client started!
+client accepted
+into run
+Enter action (1 - get a file, 2 - create a file, 3 - delete a file): > 1
+start to wait info from client
+Enter filename: > test_purpose_1713N0.txt
+The request was sent.
+Received: GET test_purpose_1713N0.txt
+File don't exist
+Sent: All files were sent!
+start to wait info from client
+The response says that the file was not found!
+Client started!
+client accepted
+into run
+Enter action (1 - get a file, 2 - create a file, 3 - delete a file): > 3
+start to wait info from client
+Enter filename: > test_purpose_RGSTZ0.txt
+The request was sent.
+Received: DELETE test_purpose_RGSTZ0.txt
+Sent: All files were sent!
+start to wait info from client
+The response says that the file was not found!
+Client started!
+client accepted
+into run
+start to wait info from client
+Enter action (1 - get a file, 2 - create a file, 3 - delete a file): > 3
+Enter filename: > test_purpose_WOJ9RQ4FI.txt
+The request was sent.
+Received: DELETE test_purpose_WOJ9RQ4FI.txt
+Sent: All files were sent!
+start to wait info from client
+The response says that the file was successfully deleted!
+Client started!
+client accepted
+into run
+start to wait info from client
+Enter action (1 - get a file, 2 - create a file, 3 - delete a file): > exit
+The request was sent.
+Received: exit
+the response says that the server has been stopped
+]]></system-out>
+  <system-err><![CDATA[Exception in thread "Thread-4" org.hyperskill.hstest.dynamic.security.ExitException: Tried to exit with status 0.
+	at org.hyperskill.hstest.dynamic.security.TestingSecurityManager.checkExit(TestingSecurityManager.java:50)
+	at java.base/java.lang.Runtime.exit(Runtime.java:113)
+	at java.base/java.lang.System.exit(System.java:1860)
+	at server.Session.run(Session.java:44)
+java.net.BindException: Address already in use
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:555)
+	at java.base/sun.nio.ch.Net.bind(Net.java:544)
+	at java.base/sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:643)
+	at java.base/java.net.ServerSocket.bind(ServerSocket.java:388)
+	at java.base/java.net.ServerSocket.<init>(ServerSocket.java:274)
+	at java.base/java.net.ServerSocket.<init>(ServerSocket.java:167)
+	at server.PortListening.run(PortListening.java:15)
+java.net.BindException: Address already in use
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:555)
+	at java.base/sun.nio.ch.Net.bind(Net.java:544)
+	at java.base/sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:643)
+	at java.base/java.net.ServerSocket.bind(ServerSocket.java:388)
+	at java.base/java.net.ServerSocket.<init>(ServerSocket.java:274)
+	at java.base/java.net.ServerSocket.<init>(ServerSocket.java:167)
+	at server.PortListening.run(PortListening.java:15)
+java.net.BindException: Address already in use
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:555)
+	at java.base/sun.nio.ch.Net.bind(Net.java:544)
+	at java.base/sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:643)
+	at java.base/java.net.ServerSocket.bind(ServerSocket.java:388)
+	at java.base/java.net.ServerSocket.<init>(ServerSocket.java:274)
+	at java.base/java.net.ServerSocket.<init>(ServerSocket.java:167)
+	at server.PortListening.run(PortListening.java:15)
+java.net.BindException: Address already in use
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:555)
+	at java.base/sun.nio.ch.Net.bind(Net.java:544)
+	at java.base/sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:643)
+	at java.base/java.net.ServerSocket.bind(ServerSocket.java:388)
+	at java.base/java.net.ServerSocket.<init>(ServerSocket.java:274)
+	at java.base/java.net.ServerSocket.<init>(ServerSocket.java:167)
+	at server.PortListening.run(PortListening.java:15)
+java.net.BindException: Address already in use
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:555)
+	at java.base/sun.nio.ch.Net.bind(Net.java:544)
+	at java.base/sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:643)
+	at java.base/java.net.ServerSocket.bind(ServerSocket.java:388)
+	at java.base/java.net.ServerSocket.<init>(ServerSocket.java:274)
+	at java.base/java.net.ServerSocket.<init>(ServerSocket.java:167)
+	at server.PortListening.run(PortListening.java:15)
+java.net.BindException: Address already in use
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:555)
+	at java.base/sun.nio.ch.Net.bind(Net.java:544)
+	at java.base/sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:643)
+	at java.base/java.net.ServerSocket.bind(ServerSocket.java:388)
+	at java.base/java.net.ServerSocket.<init>(ServerSocket.java:274)
+	at java.base/java.net.ServerSocket.<init>(ServerSocket.java:167)
+	at server.PortListening.run(PortListening.java:15)
+java.net.BindException: Address already in use
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:555)
+	at java.base/sun.nio.ch.Net.bind(Net.java:544)
+	at java.base/sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:643)
+	at java.base/java.net.ServerSocket.bind(ServerSocket.java:388)
+	at java.base/java.net.ServerSocket.<init>(ServerSocket.java:274)
+	at java.base/java.net.ServerSocket.<init>(ServerSocket.java:167)
+	at server.PortListening.run(PortListening.java:15)
+java.net.BindException: Address already in use
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:555)
+	at java.base/sun.nio.ch.Net.bind(Net.java:544)
+	at java.base/sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:643)
+	at java.base/java.net.ServerSocket.bind(ServerSocket.java:388)
+	at java.base/java.net.ServerSocket.<init>(ServerSocket.java:274)
+	at java.base/java.net.ServerSocket.<init>(ServerSocket.java:167)
+	at server.PortListening.run(PortListening.java:15)
+java.io.EOFException
+	at java.base/java.io.DataInputStream.readUnsignedShort(DataInputStream.java:346)
+	at java.base/java.io.DataInputStream.readUTF(DataInputStream.java:595)
+	at java.base/java.io.DataInputStream.readUTF(DataInputStream.java:570)
+	at server.Session.run(Session.java:25)
+java.io.EOFException
+	at java.base/java.io.DataInputStream.readUnsignedShort(DataInputStream.java:346)
+	at java.base/java.io.DataInputStream.readUTF(DataInputStream.java:595)
+	at java.base/java.io.DataInputStream.readUTF(DataInputStream.java:570)
+	at server.Session.run(Session.java:25)
+java.io.EOFException
+]]></system-err>
+</testsuite>
