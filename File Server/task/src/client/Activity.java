@@ -3,7 +3,7 @@ package client;
 import java.io.*;
 
 public class Activity {
-    public static final String generalPrompt = "Enter action (1 - get a file, 2 - create a file, 3 - delete a file): ";
+    public static final String generalPrompt = "Enter action (1 - get a file, 2 - save a file, 3 - delete a file): ";
     public static void routine(DataInputStream inputStream, DataOutputStream outputStream) throws IOException {
         try (
                 BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));

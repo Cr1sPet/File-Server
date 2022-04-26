@@ -11,7 +11,15 @@ public class QueryProcessing  {
             File.separator + "src" + File.separator + "server" + File.separator + "data" + File.separator;
 
     private static final String filesPath = "./File Server/task/src/server/data/";
-    public static String PutProcess(String []parsedMessage) {
+
+    public static void writeBytesToFIle(byte []bytes,  File file) throws IOException {
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            fos.write(bytes);
+        }
+    }
+
+
+    public static String PutProcess(String []parsedMessage, DataInputStream is) {
         try {
             String fileName = parsedMessage[1];
             File file = new File(filesPath + fileName);
@@ -19,10 +27,9 @@ public class QueryProcessing  {
                 System.out.println("File exist");
                 return "403";
             } else {
-                FileWriter writer = new FileWriter(file);
-                String content = parsedMessage[2];
-                writer.write(content);
-                writer.close();
+                byte []bytes = new byte[Integer.valueOf(parsedMessage[2])];
+                is.readFully(bytes, 0, bytes.length);
+                writeBytesToFIle(bytes, file);
             }
         } catch (IOException e) {
             System.out.println("IOException in PutProcess");

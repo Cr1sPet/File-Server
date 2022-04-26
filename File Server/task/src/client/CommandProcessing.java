@@ -4,19 +4,62 @@ import java.io.*;
 
 public class CommandProcessing  {
 
-    public static final String getFileNamePrompt = "Enter filename: ";
+    public static final String getFileNamePrompt = "Enter name of the file: ";
+    public static final String getFileNameToSavePrompt = "Enter name of the file to be saved on server:";
     public static final String getFileContentPrompt = "Enter file content: ";
+
+
+    public byte[] getByteArrayFromFile(String fileName) throws IOException {
+
+        File file = new File(fileName);
+        if (!file.exists()) {
+            throw new FileNotFoundException("File " + fileName + "doesn't extsts!");
+        }
+
+        long length = file.length();
+        if (length > Integer.MAX_VALUE) {
+            throw new IOException("File too large!");
+        }
+
+        byte [] bytes = new byte[(int) length];
+
+        int offset = 0;
+        int numRead = 0;
+
+        InputStream is = new FileInputStream(file);
+        try {
+            while (offset < bytes.length
+                    && (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
+                offset += numRead;
+            }
+        } finally {
+            is.close();
+        }
+        return bytes;
+    }
+
 
     public void createAFile(DataInputStream inputStream, DataOutputStream outputStream, BufferedReader reader) throws IOException {
 
         String request = "PUT ";
 
         System.out.print(getFileNamePrompt);
-        request =   request.concat(reader.readLine()).concat(" ");
-        System.out.print(getFileContentPrompt);
-        request = request.concat(reader.readLine());
+        String fileNameToRead =  reader.readLine();
 
+        System.out.print(getFileNameToSavePrompt);
+
+        byte[] bytes = getByteArrayFromFile(fileNameToRead);
+
+        request = request.concat(reader.readLine())
+                .concat(" ")
+                .concat(bytes.length + "");
+
+        //sending header in format : PUT + fileName + fileSize
         outputStream.writeUTF(request);
+
+        //sending file data in bytes
+        outputStream.write(bytes);
+
         System.out.println("The request was sent.");
 
         String responseCode = inputStream.readUTF();

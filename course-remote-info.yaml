@@ -3,7 +3,7 @@ hyperskill_project:
   ide_files: https://stepik.org/media/attachments/lesson/209950/additional_files.json
   is_template_based: false
   use_ide: true
-update_date: Thu, 14 Apr 2022 20:03:23 UTC
+update_date: Tue, 26 Apr 2022 20:06:05 UTC
 stages:
 - id: 283
   step: 5425
@@ -35,6 +35,8 @@ topics:
     theory_id: 16927
   - title: Computer programming
     theory_id: 8739
+  - title: Paradigms
+    theory_id: 15860
   - title: Introduction to Java
     theory_id: 3500
   - title: Basic literals
@@ -109,6 +111,8 @@ topics:
     theory_id: 3614
   - title: Package
     theory_id: 3621
+  - title: Formatted output
+    theory_id: 7046
   - title: Pseudocode
     theory_id: 15090
   - title: Fixed-size array
@@ -117,8 +121,6 @@ topics:
     theory_id: 5357
   - title: Processing strings
     theory_id: 3551
-  - title: Formatted output
-    theory_id: 7046
   - title: IntelliJ IDEA
     theory_id: 3801
   - title: Introduction to generic programming
@@ -162,7 +164,7 @@ topics:
   1:
   - title: JVM, JRE, and JDK
     theory_id: 3499
-  - title: Introduction to operating systems
+  - title: Introduction to Operating systems
     theory_id: 9704
   - title: Overloading
     theory_id: 3525
@@ -176,7 +178,7 @@ topics:
     theory_id: 3553
   - title: Command line overview
     theory_id: 8977
-  - title: Parameters and options
+  - title: Parameters and Options
     theory_id: 9746
   - title: Running programs on your computer
     theory_id: 3746

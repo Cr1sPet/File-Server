@@ -296,6 +296,340 @@ files:
 
 
   learner_created: false
+- name: src/server/Session.java
+  visible: true
+  text: |
+    package server;
+
+    import java.io.DataInputStream;
+    import java.io.DataOutputStream;
+    import java.io.IOException;
+    import java.net.Socket;
+
+    public class Session extends Thread {
+        private Socket socket;
+
+        Session(Socket socket) {
+            this.socket = socket;
+        }
+
+        @Override
+        public void run() {
+            String response;
+            try (
+                    DataInputStream inputStream = new DataInputStream(socket.getInputStream());
+                    DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
+            ){
+                System.out.println("into run");
+                while (true) {
+                    System.out.println("start to wait info from client");
+                    String message = inputStream.readUTF();
+                    System.out.println("Received: " + message);
+                    String []parsedMessage = message.stripLeading().split("\\s", 3);
+                    switch (parsedMessage[0]) {
+                        case "PUT":
+                            response = QueryProcessing.PutProcess(parsedMessage);
+                            outputStream.writeUTF(response);
+                            break;
+                        case "GET":
+                            response = QueryProcessing.GetProcess(parsedMessage);
+                            outputStream.writeUTF(response);
+                            break;
+                        case "DELETE":
+                            response = QueryProcessing.DeleteProcess(parsedMessage);
+                            outputStream.writeUTF(response);
+                            break;
+                        case "exit":
+                            outputStream.write(200);
+                            socket.close();
+                            System.exit(0);
+                    }
+                    System.out.println("Sent: " + "All files were sent!");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+  learner_created: true
+- name: src/client/CommandProcessing.java
+  visible: true
+  text: |
+    package client;
+
+    import java.io.*;
+
+    public class CommandProcessing  {
+
+        public static final String getFileNamePrompt = "Enter filename: ";
+        public static final String getFileContentPrompt = "Enter file content: ";
+
+        public void createAFile(DataInputStream inputStream, DataOutputStream outputStream, BufferedReader reader) throws IOException {
+
+            String request = "PUT ";
+
+            System.out.print(getFileNamePrompt);
+            request =   request.concat(reader.readLine()).concat(" ");
+            System.out.print(getFileContentPrompt);
+            request = request.concat(reader.readLine());
+
+            outputStream.writeUTF(request);
+            System.out.println("The request was sent.");
+
+            String responseCode = inputStream.readUTF();
+            System.out.println(responseCode);
+
+            switch (responseCode) {
+                case "200" :
+                    System.out.println("The response says that file was created!");
+                    break;
+                case "403" :
+                    System.out.println("The response says that creating the file was forbidden!");
+                    break;
+                case "500" :
+                    System.out.println("The response says that there is an unexpected error!");
+                    break;
+            }
+        }
+
+        public void stopServer(DataInputStream inputStream, DataOutputStream outputStream) throws IOException {
+            outputStream.writeUTF("exit");
+            System.out.println("The request was sent.");
+
+            if (inputStream.read() == 200) {
+                System.out.println("the response says that the server has been stopped");
+            }
+        }
+
+        public void getAFile(DataInputStream inputStream, DataOutputStream outputStream, BufferedReader reader) throws IOException {
+            String request = "GET ";
+
+            System.out.print(getFileNamePrompt);
+            request = request.concat(reader.readLine());
+
+            outputStream.writeUTF(request);
+            System.out.println("The request was sent.");
+
+            String response = inputStream.readUTF();
+            String []parsedResponse = response.split("\\s", 2);
+
+            switch (parsedResponse[0]) {
+                case "200" :
+                    System.out.println("The content of the file is: " + parsedResponse[1]);
+                    break;
+                case "403" :
+                    System.out.println("The response says that the file was not found!");
+                    break;
+                case "500" :
+                    System.out.println("The response says that there is an unexpected error!");
+                    break;
+            }
+        }
+
+        public void deleteAFile(DataInputStream inputStream, DataOutputStream outputStream, BufferedReader reader) throws IOException {
+            String request = "DELETE ";
+
+            System.out.print(getFileNamePrompt);
+            request = request.concat(reader.readLine());
+
+            outputStream.writeUTF(request);
+            System.out.println("The request was sent.");
+
+            String response = inputStream.readUTF();
+
+            switch (response) {
+                case "200" :
+                    System.out.println("The response says that the file was successfully deleted!");
+                    break;
+                case "404" :
+                    System.out.println("The response says that the file was not found!");
+                    break;
+                case "500" :
+                    System.out.println("The response says that there is an unexpected error!");
+                    break;
+            }
+        }
+
+    }
+  learner_created: true
+- name: src/client/Activity.java
+  visible: true
+  text: |
+    package client;
+
+    import java.io.*;
+
+    public class Activity {
+        public static final String generalPrompt = "Enter action (1 - get a file, 2 - create a file, 3 - delete a file): ";
+        public static void routine(DataInputStream inputStream, DataOutputStream outputStream) throws IOException {
+            try (
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            ) {
+                CommandProcessing commandProcessing = new CommandProcessing();
+                while (true) {
+                    System.out.print(generalPrompt);
+                    switch (reader.readLine()) {
+                        case "1" :
+                            commandProcessing.getAFile(inputStream, outputStream, reader);
+                            break;
+                        case "2" :
+                            commandProcessing.createAFile(inputStream, outputStream, reader);
+                            break;
+                        case "3" :
+                            commandProcessing.deleteAFile(inputStream, outputStream, reader);
+                            break;
+                        case "exit" :
+                            commandProcessing.stopServer(inputStream, outputStream);
+                            System.exit(0);
+                            break;
+                        default :
+                            System.out.println("Invalid input, please try again");
+                            break;
+                    }
+                }
+            }
+        }
+    }
+  learner_created: true
+- name: src/client/Main.java
+  visible: true
+  text: |+
+    package client;
+
+    import java.io.*;
+    import java.net.Socket;
+
+    public class Main {
+        private static final String SERVER_ADDRESS = "127.0.0.1";
+        private static final int SERVER_PORT = 23456;
+
+        public static void main(String[] args) throws IOException {
+            System.out.println("Client started!");
+            try (
+                    Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
+                    DataInputStream inputStream = new DataInputStream(socket.getInputStream());
+                    DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
+            ) {
+                Activity.routine(inputStream, outputStream);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+  learner_created: true
+- name: src/server/QueryProcessing.java
+  visible: true
+  text: |
+    package server;
+
+    import java.io.*;
+    import java.nio.file.DirectoryNotEmptyException;
+    import java.nio.file.Files;
+    import java.nio.file.NoSuchFileException;
+    import java.nio.file.Path;
+
+    public class QueryProcessing  {
+        private static final String testFilesPath = System.getProperty("user.dir") +
+                File.separator + "src" + File.separator + "server" + File.separator + "data" + File.separator;
+
+        private static final String filesPath = "./File Server/task/src/server/data/";
+        public static String PutProcess(String []parsedMessage) {
+            try {
+                String fileName = parsedMessage[1];
+                File file = new File(filesPath + fileName);
+                if (file.exists()) {
+                    System.out.println("File exist");
+                    return "403";
+                } else {
+                    FileWriter writer = new FileWriter(file);
+                    String content = parsedMessage[2];
+                    writer.write(content);
+                    writer.close();
+                }
+            } catch (IOException e) {
+                System.out.println("IOException in PutProcess");
+                e.printStackTrace();
+                return "500";
+            }
+            return "200";
+        }
+
+        public static String GetProcess(String[] parsedMessage) {
+            String fileContent = "";
+            try {
+                String fileName = parsedMessage[1];
+                File file = new File(filesPath + fileName);
+                if (!file.exists()) {
+                    System.out.println("File don't exist");
+                    return "403";
+                } else {
+                    CharArrayWriter charArrayWriter;
+                    charArrayWriter = new CharArrayWriter();
+                    BufferedReader reader = new BufferedReader(new FileReader(file));
+                    String inputStr;
+                    while ((inputStr = reader.readLine()) != null) {
+                        charArrayWriter.write(inputStr);
+                    }
+                    fileContent = charArrayWriter.toString();
+                    charArrayWriter.close();
+                    reader.close();
+                }
+            } catch (IOException e) {
+                System.out.println("IOException in PutProcess");
+                e.printStackTrace();
+                return "500";
+            }
+            return  "200 " + fileContent;
+        }
+
+        public static String DeleteProcess(String []parsedMessage) {
+                String fileName = parsedMessage[1];
+                String filePath = filesPath + fileName;
+                try {
+                    if (!Files.deleteIfExists(Path.of(filePath))) {
+                        return "404";
+                    }
+                } catch (IOException e) {
+                    return "500";
+                }
+            return  "200";
+        }
+    }
+  learner_created: true
+- name: src/server/PortListening.java
+  visible: true
+  text: |
+    package server;
+
+    import java.io.IOException;
+    import java.net.ServerSocket;
+    import server.Session;
+
+    public class PortListening extends Thread{
+        int PORT;
+        PortListening(final int PORT) {
+            this.PORT = PORT;
+        }
+        @Override
+        public void run() {
+            while (true) {
+                try (ServerSocket server = new ServerSocket(PORT)) {
+                    Session session = new Session(server.accept());
+                    System.out.println("client accepted");
+                    session.start();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+  learner_created: true
 - name: test/Utils.java
   visible: false
   text: |+
@@ -413,6 +747,24 @@ files:
 
 
   learner_created: false
+- name: src/client/hello.txt
+  visible: true
+  learner_created: true
+- name: src/server/data/hello.txt
+  visible: true
+  learner_created: true
+- name: src/client/FIrst_Petrov
+  visible: true
+  learner_created: true
+- name: src/server/data/lopp
+  visible: true
+  learner_created: true
+- name: src/server/data/qwsd
+  visible: true
+  learner_created: true
+- name: src/server/data/hgf
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/5428#comment
 status: Unchecked
 record: -1

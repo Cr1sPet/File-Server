@@ -1,8 +1,8 @@
-<h5 id="description">Description</h5>
+<h5 id="description" id="description">Description</h5>
 
 <p>In this stage, you will write a program that can save files on a hard drive and send or delete them upon request.</p>
 
-<p>To manage our files, we will use simplified HTTP requests. An HTTP request in our program should start with <code class="java">GET</code>, <code class="java">PUT</code>, or <code class="java">DELETE</code>. We encourage you to <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods" rel="noopener noreferrer nofollow">read more</a> about the HTTP methods. An HTTP response in our program should start with the status code of the operation. For example, the code <code class="java">200</code> means that the operation was successful, and <code class="java">404</code> means that the resource was not found. Check out the <a target="_blank" href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes" rel="nofollow noopener noreferrer">full list of status codes on Wikipedia</a>.</p>
+<p>To manage our files, we will use simplified HTTP requests. An HTTP request in our program should start with <code class="java">GET</code>, <code class="java">PUT</code>, or <code class="java">DELETE</code>. We encourage you to <a target="_blank" target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods" rel="noopener noreferrer nofollow">read more</a> about the HTTP methods. An HTTP response in our program should start with the status code of the operation. For example, the code <code class="java">200</code> means that the operation was successful, and <code class="java">404</code> means that the resource was not found. Check out the <a target="_blank" target="_blank" href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes" rel="nofollow noopener noreferrer">full list of status codes on Wikipedia</a>.</p>
 
 <p>To create a new file on the server, the client should send a request <code class="java">PUT NAME DATA</code>, where <code class="java">NAME</code> is the name of the file without spaces or tabs, and <code class="java">DATA</code> indicates text data. If a file with this name already exists, the server should respond with the code <code class="java">403</code>. If the file is created successfully, the server responds with the code <code class="java">200</code>. In this case, the client should print <code class="java">The response says that the file was created!</code>. Otherwise, it should print <code class="java">The response says that creating the file was forbidden!</code></p>
 
@@ -18,7 +18,7 @@ To get a file from the server, the client should send a request <code class="jav
 
 <p>Don't forget to shut down your server before starting tests!</p>
 
-<h5 id="objectives">Objectives</h5>
+<h5 id="objectives" id="objectives">Objectives</h5>
 
 <p>In this stage, your client-side program should:</p>
 
@@ -46,7 +46,7 @@ To get a file from the server, the client should send a request <code class="jav
 
 <p>      3. Server program should not terminate until it receives the <code class="java">exit</code> command.</p>
 
-<h5 id="examples">Examples</h5>
+<h5 id="examples" id="examples">Examples</h5>
 
 <p>The greater-than symbol followed by a space (<code class="java">&gt; </code>) represents the user input. Note that it's not part of the input.</p>
 

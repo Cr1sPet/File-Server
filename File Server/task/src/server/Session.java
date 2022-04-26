@@ -27,7 +27,7 @@ public class Session extends Thread {
                 String []parsedMessage = message.stripLeading().split("\\s", 3);
                 switch (parsedMessage[0]) {
                     case "PUT":
-                        response = QueryProcessing.PutProcess(parsedMessage);
+                        response = QueryProcessing.PutProcess(parsedMessage, inputStream);
                         outputStream.writeUTF(response);
                         break;
                     case "GET":
