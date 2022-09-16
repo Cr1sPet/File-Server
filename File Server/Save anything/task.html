@@ -1,4 +1,4 @@
-<h5 id="description" id="description">Description</h5>
+<h5 id="description">Description</h5>
 
 <p>In this stage, you will write a program that sends real text and image files to the server. The server keeps the files and sends them back on request until you decide to delete them.</p>
 
@@ -8,7 +8,7 @@
 
 <p>Of course, most files are usually much larger than just one line of text. The process of saving larger files may take a while, so you should use a parallel approach. For example, you may want to use executors, and every time the client sends a request, you should perform the requested task in the thread pool, not in the main thread. The main thread should just wait for another request. Note that the map of identifiers to the file names should be used synchronously because different threads have access to it. Do not forget to save this map somewhere because you don't want to lose it when the server reboots. After rebooting the server, check that the ID generation process does not start right away.</p>
 
-<p>Notice that you can't send bytes via text stream: while bytes require a single-byte stream, a text stream is variable-byte (this is because Strings in Java are encoded in the UTF format when they are sent using <code class="language-java">DataInputStream</code>). The solution is sending the byte array itself, not the bytes encoded as text. When you receive an array of bytes, you can't really say where the end of the stream is, unlike the case with the <code class="language-java">readUTF</code> method where you read only one string at a time. This problem can be solved by adding the number of bytes at the very start of the stream. The sender calculates and sends this number followed by the byte stream, and the receiver reads the number and then reads the stream with the specified number of bytes. You can use the following snippet from <a target="_blank" target="_blank" href="https://stackoverflow.com/questions/1176135/socket-send-and-receive-byte-array" rel="nofollow noopener noreferrer">stack overflow</a> to understand how this works:</p>
+<p>Notice that you can't send bytes via text stream: while bytes require a single-byte stream, a text stream is variable-byte (this is because Strings in Java are encoded in the UTF format when they are sent using <code class="language-java">DataInputStream</code>). The solution is sending the byte array itself, not the bytes encoded as text. When you receive an array of bytes, you can't really say where the end of the stream is, unlike the case with the <code class="language-java">readUTF</code> method where you read only one string at a time. This problem can be solved by adding the number of bytes at the very start of the stream. The sender calculates and sends this number followed by the byte stream, and the receiver reads the number and then reads the stream with the specified number of bytes. You can use the following snippet from <a target="_blank" target="_blank" target="_blank" target="_blank" target="_blank" href="https://stackoverflow.com/questions/1176135/socket-send-and-receive-byte-array" rel="nofollow noopener noreferrer">stack overflow</a> to understand how this works:</p>
 
 <pre><code class="language-java">byte[] message = ...
 Socket socket = ...
@@ -37,7 +37,7 @@ If the user wants to delete a file, the client program should ask if the user wa
 
 <p>Since the server cannot shut down by itself and the tests require that the program stops at a certain point, you should implement a simple way to stop the server. The client should be able to handle the <code class="language-java">exit</code> action and send the respective message to the server. When the client sends <code class="language-java">exit</code>, you should stop the server. Note: you shouldn't allow this behavior in a normal situation when no testing needs to be done.</p>
 
-<h5 id="objectives" id="objectives">Objectives</h5>
+<h5 id="objectives">Objectives</h5>
 
 <p>In this stage, your client-side program should:</p>
 
@@ -66,7 +66,7 @@ If the user wants to delete a file, the client program should ask if the user wa
 
 <p>      4. The server program should not terminate until it receives the <code class="language-java">exit</code> command.</p>
 
-<h5 id="examples" id="examples">Examples</h5>
+<h5 id="examples">Examples</h5>
 
 <p>The greater-than symbol followed by a space (<code class="language-java">&gt; </code>) represents the user input. Note that it's not part of the input.</p>
 

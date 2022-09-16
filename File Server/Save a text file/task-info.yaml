@@ -5,12 +5,85 @@ files:
   text: |-
     package server;
 
-    public class Main {
+    import java.io.DataInputStream;
+    import java.io.DataOutputStream;
+    import java.io.IOException;
+    import java.net.Socket;
+    import java.net.ServerSocket;
 
+    public class Main {
+        private static final int PORT = 23456;
         public static void main(String[] args) {
-            System.out.println("Hello, world!");
+            System.out.println("Server started!");
+            try (ServerSocket server = new ServerSocket(PORT)) {
+                Session session = new Session(server.accept());
+                session.start();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
+
+    class Session extends Thread {
+        Socket socket;
+        private DataInputStream inputStream;
+        private DataOutputStream outputStream;
+
+        Session(Socket socket) throws IOException {
+            this.socket = socket;
+            inputStream = new DataInputStream(socket.getInputStream());
+            outputStream = new DataOutputStream(socket.getOutputStream());
+        }
+
+        @Override
+        public void run() {
+            try {
+                String message = inputStream.readUTF();
+                System.out.println("Received: " + message);
+                outputStream.writeUTF("All files were sent!");
+                System.out.println("Sent: " + "All files were sent!");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+  learner_created: false
+- name: src/client/Main.java
+  visible: true
+  text: |+
+    package client;
+
+    import java.io.DataInputStream;
+    import java.io.DataOutputStream;
+    import java.io.IOException;
+    import java.net.Socket;
+
+    public class Main {
+        private static final String SERVER_ADDRESS = "127.0.0.1";
+        private static final int SERVER_PORT = 23456;
+
+        public static void main(String[] args) {
+            System.out.println("Client started!");
+            try (
+                    Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
+                    DataInputStream inputStream = new DataInputStream(socket.getInputStream());
+                    DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
+            ) {
+                outputStream.writeUTF("Give me everything you have!");
+                System.out.println("Sent: " + "Give me everything you have!");
+                String message = inputStream.readUTF();
+                System.out.println("Received: " + message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
   learner_created: false
 - name: test/FileServerTest.java
   visible: false
@@ -238,39 +311,13 @@ files:
     }
 
   learner_created: false
-- name: src/client/Main.java
-  visible: true
-  text: |+
-    package client;
-
-    import java.io.DataInputStream;
-    import java.io.DataOutputStream;
-    import java.io.IOException;
-    import java.net.Socket;
-
-    public class Main {
-        private static final String SERVER_ADDRESS = "127.0.0.1";
-        private static final int SERVER_PORT = 23456;
-
-        public static void main(String[] args) {
-            System.out.println("Client started!");
-            try (
-                    Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
-                    DataInputStream inputStream = new DataInputStream(socket.getInputStream());
-                    DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
-            ) {
-                outputStream.writeUTF("Give me everything you have!");
-                System.out.println("Sent: " + "Give me everything you have!");
-                String message = inputStream.readUTF();
-                System.out.println("Received: " + message);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-  learner_created: true
 - name: src/server/Session.java
+  visible: true
+  learner_created: true
+- name: src/client/CommandProcessing.java
+  visible: true
+  learner_created: true
+- name: src/client/Activity.java
   visible: true
   learner_created: true
 - name: src/server/QueryProcessing.java
@@ -279,15 +326,6 @@ files:
 - name: src/server/PortListening.java
   visible: true
   learner_created: true
-- name: src/client/Activity.java
-  visible: true
-  learner_created: true
-- name: src/client/CommandProcessing.java
-  visible: true
-  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/5427#comment
 status: Solved
-feedback:
-  message: Congratulations!
-  time: Thu, 14 Apr 2022 20:26:56 UTC
-record: 3
+record: 2

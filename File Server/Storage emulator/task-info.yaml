@@ -299,7 +299,4 @@ files:
   learner_created: false
 feedback_link: https://hyperskill.org/learn/step/5425#comment
 status: Solved
-feedback:
-  message: Congratulations!
-  time: Mon, 11 Apr 2022 22:45:25 UTC
-record: 1
+record: 4

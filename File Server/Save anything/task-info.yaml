@@ -2,13 +2,14 @@ type: edu
 files:
 - name: src/server/Main.java
   visible: true
-  text: |-
+  text: |
     package server;
 
     public class Main {
-
-        public static void main(String[] args) {
-            System.out.println("Hello, world!");
+        private static final int PORT = 23456;
+        public static void main(String[] args) throws InterruptedException {
+            System.out.println("Server started!");
+            new PortListening(PORT).start();
         }
     }
   learner_created: false
@@ -296,6 +297,33 @@ files:
 
 
   learner_created: false
+- name: src/client/Main.java
+  visible: true
+  text: |+
+    package client;
+
+    import java.io.*;
+    import java.net.Socket;
+
+    public class Main {
+        private static final String SERVER_ADDRESS = "127.0.0.1";
+        private static final int SERVER_PORT = 23456;
+
+        public static void main(String[] args) throws IOException {
+            System.out.println("Client started!");
+            try (
+                    Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
+                    DataInputStream inputStream = new DataInputStream(socket.getInputStream());
+                    DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
+            ) {
+                Activity.routine(inputStream, outputStream);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+  learner_created: false
 - name: src/server/Session.java
   visible: true
   text: |
@@ -356,7 +384,7 @@ files:
             }
         }
     }
-  learner_created: true
+  learner_created: false
 - name: src/client/CommandProcessing.java
   visible: true
   text: |
@@ -456,7 +484,7 @@ files:
         }
 
     }
-  learner_created: true
+  learner_created: false
 - name: src/client/Activity.java
   visible: true
   text: |
@@ -495,34 +523,7 @@ files:
             }
         }
     }
-  learner_created: true
-- name: src/client/Main.java
-  visible: true
-  text: |+
-    package client;
-
-    import java.io.*;
-    import java.net.Socket;
-
-    public class Main {
-        private static final String SERVER_ADDRESS = "127.0.0.1";
-        private static final int SERVER_PORT = 23456;
-
-        public static void main(String[] args) throws IOException {
-            System.out.println("Client started!");
-            try (
-                    Socket socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
-                    DataInputStream inputStream = new DataInputStream(socket.getInputStream());
-                    DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
-            ) {
-                Activity.routine(inputStream, outputStream);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-  learner_created: true
+  learner_created: false
 - name: src/server/QueryProcessing.java
   visible: true
   text: |
@@ -535,10 +536,10 @@ files:
     import java.nio.file.Path;
 
     public class QueryProcessing  {
-        private static final String testFilesPath = System.getProperty("user.dir") +
+        private static final String filesPath = System.getProperty("user.dir") +
                 File.separator + "src" + File.separator + "server" + File.separator + "data" + File.separator;
 
-        private static final String filesPath = "./File Server/task/src/server/data/";
+        private static final String filesPath1 = "./File Server/task/src/server/data/";
         public static String PutProcess(String []parsedMessage) {
             try {
                 String fileName = parsedMessage[1];
@@ -601,7 +602,7 @@ files:
             return  "200";
         }
     }
-  learner_created: true
+  learner_created: false
 - name: src/server/PortListening.java
   visible: true
   text: |
@@ -629,7 +630,7 @@ files:
             }
         }
     }
-  learner_created: true
+  learner_created: false
 - name: test/Utils.java
   visible: false
   text: |+
@@ -747,24 +748,129 @@ files:
 
 
   learner_created: false
-- name: src/client/hello.txt
+- name: src/client/Get.java
   visible: true
   learner_created: true
-- name: src/server/data/hello.txt
+- name: src/serialization/SerializationUtils.java
   visible: true
   learner_created: true
-- name: src/client/FIrst_Petrov
+- name: src/client/data/sec.txt
   visible: true
   learner_created: true
-- name: src/server/data/lopp
+- name: src/client/data/wow.txt
   visible: true
   learner_created: true
-- name: src/server/data/qwsd
+- name: src/serialization/savedFilesInfo
   visible: true
   learner_created: true
-- name: src/server/data/hgf
+- name: src/server/data/sec.txt
+  visible: true
+  learner_created: true
+- name: src/server/data/sec4.txt
+  visible: true
+  learner_created: true
+- name: src/client/data/govno.txt
+  visible: true
+  learner_created: true
+- name: src/server/data/sdfadsf.txt
+  visible: true
+  learner_created: true
+- name: src/server/data/boba.txt
+  visible: true
+  learner_created: true
+- name: bin/main/server/data/boba.txt
+  visible: true
+  learner_created: true
+- name: src/server/data/boba2
+  visible: true
+  learner_created: true
+- name: bin/main/server/data/boba2
+  visible: true
+  learner_created: true
+- name: src/client/data/bog.txt
+  visible: true
+  learner_created: true
+- name: bin/main/client/data/bog.txt
   visible: true
   learner_created: true
 feedback_link: https://hyperskill.org/learn/step/5428#comment
-status: Unchecked
-record: -1
+status: Failed
+feedback:
+  message: "Error in test #3\n\nInfinite loop detected.\nLast 90 lines your program\
+    \ printed have 5 blocks of 18 lines of the same text.\n\nPlease find below the\
+    \ output of your program during this failed test.\nNote that the &#39;&gt;&#39;\
+    \ character indicates the beginning of the input line.\n\n---\n\nstdout:\nServer\
+    \ started!\nException OK\nClient started!\nclient accepted\nEnter action (1 -\
+    \ get a file, 2 - save a file, 3 - delete a file): &gt; 2\nEnter name of the file:\
+    \ &gt; test_purpose_test1.txt\nEnter name of the file to be saved on server:&gt;\n\
+    \nstderr:\njava.net.BindException: Address already in use\n\tat java.base/sun.nio.ch.Net.bind0(Native\
+    \ Method)\n\tat java.base/sun.nio.ch.Net.bind(Net.java:555)\n\tat java.base/sun.nio.ch.Net.bind(Net.java:544)\n\
+    \tat java.base/sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:643)\n\tat java.base/java.net.ServerSocket.bind(ServerSocket.java:388)\n\
+    \tat java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:274)\n\tat\
+    \ java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:167)\n\tat server.PortListening.run(PortListening.java:31)\n\
+    java.net.BindException: Address already in use\n\tat java.base/sun.nio.ch.Net.bind0(Native\
+    \ Method)\n\tat java.base/sun.nio.ch.Net.bind(Net.java:555)\n\tat java.base/sun.nio.ch.Net.bind(Net.java:544)\n\
+    \tat java.base/sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:643)\n\tat java.base/java.net.ServerSocket.bind(ServerSocket.java:388)\n\
+    \tat java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:274)\n\tat\
+    \ java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:167)\n\tat server.PortListening.run(PortListening.java:31)\n\
+    java.net.BindException: Address already in use\n\tat java.base/sun.nio.ch.Net.bind0(Native\
+    \ Method)\n\tat java.base/sun.nio.ch.Net.bind(Net.java:555)\n\tat java.base/sun.nio.ch.Net.bind(Net.java:544)\n\
+    \tat java.base/sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:643)\n\tat java.base/java.net.ServerSocket.bind(ServerSocket.java:388)\n\
+    \tat java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:274)\n\tat\
+    \ java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:167)\n\tat server.PortListening.run(PortListening.java:31)\n\
+    java.net.BindException: Address already in use\n\tat java.base/sun.nio.ch.Net.bind0(Native\
+    \ Method)\n\tat java.base/sun.nio.ch.Net.bind(Net.java:555)\n\tat java.base/sun.nio.ch.Net.bind(Net.java:544)\n\
+    \tat java.base/sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:643)\n\tat java.base/java.net.ServerSocket.bind(ServerSocket.java:388)\n\
+    \tat java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:274)\n\tat\
+    \ java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:167)\n\tat server.PortListening.run(PortListening.java:31)\n\
+    java.net.BindException: Address already in use\n\tat java.base/sun.nio.ch.Net.bind0(Native\
+    \ Method)\n\tat java.base/sun.nio.ch.Net.bind(Net.java:555)\n\tat java.base/sun.nio.ch.Net.bind(Net.java:544)\n\
+    \tat java.base/sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:643)\n\tat java.base/java.net.ServerSocket.bind(ServerSocket.java:388)\n\
+    \tat java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:274)\n\tat\
+    \ java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:167)\n\tat server.PortListening.run(PortListening.java:31)\n\
+    java.net.BindException: Address already in use\n\tat java.base/sun.nio.ch.Net.bind0(Native\
+    \ Method)\n\tat java.base/sun.nio.ch.Net.bind(Net.java:555)\n\tat java.base/sun.nio.ch.Net.bind(Net.java:544)\n\
+    \tat java.base/sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:643)\n\tat java.base/java.net.ServerSocket.bind(ServerSocket.java:388)\n\
+    \tat java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:274)\n\tat\
+    \ java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:167)\n\tat server.PortListening.run(PortListening.java:31)\n\
+    java.net.BindException: Address already in use\n\tat java.base/sun.nio.ch.Net.bind0(Native\
+    \ Method)\n\tat java.base/sun.nio.ch.Net.bind(Net.java:555)\n\tat java.base/sun.nio.ch.Net.bind(Net.java:544)\n\
+    \tat java.base/sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:643)\n\tat java.base/java.net.ServerSocket.bind(ServerSocket.java:388)\n\
+    \tat java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:274)\n\tat\
+    \ java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:167)\n\tat server.PortListening.run(PortListening.java:31)\n\
+    java.net.BindException: Address already in use\n\tat java.base/sun.nio.ch.Net.bind0(Native\
+    \ Method)\n\tat java.base/sun.nio.ch.Net.bind(Net.java:555)\n\tat java.base/sun.nio.ch.Net.bind(Net.java:544)\n\
+    \tat java.base/sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:643)\n\tat java.base/java.net.ServerSocket.bind(ServerSocket.java:388)\n\
+    \tat java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:274)\n\tat\
+    \ java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:167)\n\tat server.PortListening.run(PortListening.java:31)\n\
+    java.net.BindException: Address already in use\n\tat java.base/sun.nio.ch.Net.bind0(Native\
+    \ Method)\n\tat java.base/sun.nio.ch.Net.bind(Net.java:555)\n\tat java.base/sun.nio.ch.Net.bind(Net.java:544)\n\
+    \tat java.base/sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:643)\n\tat java.base/java.net.ServerSocket.bind(ServerSocket.java:388)\n\
+    \tat java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:274)\n\tat\
+    \ java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:167)\n\tat server.PortListening.run(PortListening.java:31)\n\
+    java.net.BindException: Address already in use\n\tat java.base/sun.nio.ch.Net.bind0(Native\
+    \ Method)\n\tat java.base/sun.nio.ch.Net.bind(Net.java:555)\n\tat java.base/sun.nio.ch.Net.bind(Net.java:544)\n\
+    \tat java.base/sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:643)\n\tat java.base/java.net.ServerSocket.bind(ServerSocket.java:388)\n\
+    \tat java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:274)\n\tat\
+    \ java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:167)\n\tat server.PortListening.run(PortListening.java:31)\n\
+    java.net.BindException: Address already in use\n\tat java.base/sun.nio.ch.Net.bind0(Native\
+    \ Method)\n\tat java.base/sun.nio.ch.Net.bind(Net.java:555)\n\tat java.base/sun.nio.ch.Net.bind(Net.java:544)\n\
+    \tat java.base/sun.nio.ch.NioSocketImpl.bind(NioSocketImpl.java:643)\n\tat java.base/java.net.ServerSocket.bind(ServerSocket.java:388)\n\
+    \tat java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:274)\n\tat\
+    \ java.base/java.net.ServerSocket.&lt;init&gt;(ServerSocket.java:167)\nException\
+    \ in thread &quot;Thread-5&quot; org.hyperskill.hstest.dynamic.security.ExitException:\
+    \ Tried to exit with status 0.\n\tat org.hyperskill.hstest.dynamic.output.InfiniteLoopDetector.fail(InfiniteLoopDetector.java:155)\n\
+    \tat org.hyperskill.hstest.dynamic.output.InfiniteLoopDetector.checkInfLoopLines(InfiniteLoopDetector.java:131)\n\
+    \tat org.hyperskill.hstest.dynamic.output.InfiniteLoopDetector.write(InfiniteLoopDetector.java:56)\n\
+    \tat org.hyperskill.hstest.dynamic.output.OutputMock.write(OutputMock.java:49)\n\
+    \tat java.base/java.io.OutputStream.write(OutputStream.java:162)\n\tat java.base/java.io.PrintStream.write(PrintStream.java:568)\n\
+    \tat java.base/sun.nio.cs.StreamEncoder.writeBytes(StreamEncoder.java:234)\n\t\
+    at java.base/sun.nio.cs.StreamEncoder.implFlushBuffer(StreamEncoder.java:313)\n\
+    \tat java.base/sun.nio.cs.StreamEncoder.flushBuffer(StreamEncoder.java:111)\n\t\
+    at java.base/java.io.OutputStreamWriter.flushBuffer(OutputStreamWriter.java:178)\n\
+    \tat java.base/java.io.PrintStream.writeln(PrintStream.java:723)\n\tat java.base/java.io.PrintStream.println(PrintStream.java:1051)\n\
+    \tat java.base/java.lang.Throwable$WrappedPrintStream.println(Throwable.java:763)\n\
+    \tat java.base/java.lang.Throwable.printStackTrace(Throwable.java:673)\n\tat java.base/java.lang.Throwable.printStackTrace(Throwable.java:659)\n\
+    \tat java.base/java.lang.Throwable.printStackTrace(Throwable.java:650)\n\tat server.PortListening.run(PortListening.java:36)"
+  time: Fri, 16 Sep 2022 17:36:49 UTC
+record: 3

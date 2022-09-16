@@ -4,12 +4,14 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Map;
 
 public class Session extends Thread {
     private Socket socket;
-
-    Session(Socket socket) {
+    private Map<Integer, String> MyFiles;
+    Session(Socket socket, Map<Integer, String> MyFiles) {
         this.socket = socket;
+        this.MyFiles = MyFiles;
     }
 
     @Override
@@ -19,24 +21,17 @@ public class Session extends Thread {
                 DataInputStream inputStream = new DataInputStream(socket.getInputStream());
                 DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
         ){
-            System.out.println("into run");
             while (true) {
-                System.out.println("start to wait info from client");
-                String message = inputStream.readUTF();
-                System.out.println("Received: " + message);
-                String []parsedMessage = message.stripLeading().split("\\s", 3);
-                switch (parsedMessage[0]) {
+                String requestType = inputStream.readUTF();
+                switch (requestType) {
                     case "PUT":
-                        response = QueryProcessing.PutProcess(parsedMessage, inputStream);
-                        outputStream.writeUTF(response);
+                        QueryProcessing.putProcess(MyFiles, inputStream, outputStream);
                         break;
                     case "GET":
-                        response = QueryProcessing.GetProcess(parsedMessage);
-                        outputStream.writeUTF(response);
+                        QueryProcessing.GetProcess(inputStream, outputStream, MyFiles);
                         break;
                     case "DELETE":
-                        response = QueryProcessing.DeleteProcess(parsedMessage);
-                        outputStream.writeUTF(response);
+                        response = QueryProcessing.DeleteProcess(inputStream, outputStream, MyFiles);
                         break;
                     case "exit":
                         outputStream.write(200);
@@ -46,12 +41,14 @@ public class Session extends Thread {
                 System.out.println("Sent: " + "All files were sent!");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            System.out.println("Client was disconnected! " + e.getMessage());
+            return;
         }
-        try {
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            socket.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 }
