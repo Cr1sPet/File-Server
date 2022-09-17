@@ -1,0 +1,5 @@
+ru/crspet/fileserver/QueryProcessing.class
+ru/crspet/fileserver/App.class
+ru/crspet/fileserver/PortListening.class
+ru/crspet/fileserver/Session.class
+ru/crspet/fileserver/utils/SerializationUtils.class
