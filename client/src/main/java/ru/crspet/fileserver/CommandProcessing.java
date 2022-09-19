@@ -6,10 +6,7 @@ public class CommandProcessing  {
 
     public static final String getFileNamePrompt = "Enter name of the file: ";
     public static final String getFileNameToSavePrompt = "Enter name of the file to be saved on server:";
-
-//    public static final String clientDataPack = System.getProperty("user.dir") +
-//            File.separator + "src" + File.separator + "client" + File.separator + "data" + File.separator;
-    private static final String FILES_PATH = "/Users/jchopped/goinfre/data/file-server/client/";
+    private static final String FILES_PATH = "/home/serj/projects/File-Server/client/data/";
 
     public byte[] getByteArrayFromFile(String fileName) throws IOException {
 

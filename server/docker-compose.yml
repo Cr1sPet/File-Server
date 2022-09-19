@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+
+  fileserver:
+    build: ./app
+    container_name: fileserver
+    env_file:
+      - .env
+    volumes: 
+      - /home/${USER}/data/fileserver-data:${server_data_dir}
+    ports:
+      - "${server_port}:${server_port}"
